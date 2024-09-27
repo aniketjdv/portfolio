@@ -15,12 +15,6 @@
     />
     {% tailwind_css %}
 
-    <style>
-        .email-container {
-            display: none;
-        }
-
-    </style>
 </head>
 <body class="font-nunito bg-slate-900 p-5">
     <header class="bg-gray-800 text-white p-5">
@@ -74,30 +68,66 @@
         <section id="contact" class="my-10  text-white">
             <h2 class="text-2xl font-bold mb-5">Contact Me</h2>
             <p><i class="ri-mail-line"></i> <a href="mailto:your_email@example.com" class="text-blue-500 hover:underline">your_email@example.com</a></p>
-            <p><i class="ri-github-fill"></i></p>
-            <P><i class="ri-linkedin-box-fill"></i></P>
+            <p><i class="ri-github-fill"></i><a href="https://in.linkedin.com/">https://in.linkedin.com/</a></p>
+            <P><i class="ri-linkedin-box-fill"></i><a href="https://github.com/aniketjdv">https://github.com/aniketjdv</a></P>
 
-            <p class="flex items-center">
-                <i class="ri-mail-line text-2xl cursor-pointer" onClick="showEmail()"></i>
-                <span id="email" class="text-blue-500 hover:underline email-container ml-2">
-                    <a href="mailto:your_email@example.com">your_email@example.com</a>
-                </span>
-            </p>
             
 
-            <div class="relative">
+
+            <div class="relative group">
+                <p class="cursor-pointer" onclick="toggleLink('githubLink')">
+                    <i class="ri-github-fill"></i>
+                    <span id="githubLink" class="text-blue-500 hover:underline hidden">
+                        <a href="https://github.com/aniketjdv" target="_blank">https://github.com/aniketjdv</a>
+                    </span>
+                </p>
+                <p class="cursor-pointer" onclick="toggleLink('linkedinLink')">
+                    <i class="ri-linkedin-box-fill"></i>
+                    <span id="linkedinLink" class="text-blue-500 hover:underline hidden">
+                        <a href="https://in.linkedin.com/" target="_blank">https://in.linkedin.com/</a>
+                    </span>
+                </p>
+            </div>
+
+
+            <div class="relative group" onclick="toggleEmail()">
                 <i class="ri-mail-line text-2xl cursor-pointer"></i>
-                <span class="absolute left-0 mt-2 hidden text-blue-500 hover:underline group-hover:block">
+                <span id="emailDisplay" class="absolute left-0 mt-2 hidden text-blue-500 bg-white p-2 rounded shadow group-hover:block">
                     <a href="mailto:your_email@example.com">your_email@example.com</a>
                 </span>
             </div>
 
+
+
+            {% comment %} experiment {% endcomment %}
             <div class="relative group">
-                <i class="ri-mail-line text-2xl cursor-pointer"></i>
-                <span class="absolute left-0 mt-2 hidden text-blue-500 bg-white p-2 rounded shadow group-hover:block">
-                    <a href="mailto:your_email@example.com">your_email@example.com</a>
-                </span>
+                <div class="relative group" onclick="toggleEmail()">
+                    <i class="ri-mail-line text-2xl cursor-pointer"></i>
+                    <span id="emailDisplay" class="absolute left-0 mt-2 hidden text-blue-500 bg-white p-2 rounded shadow group-hover:block">
+                        <a href="mailto:your_email@example.com">your_email@example.com</a>
+                    </span>
+                </div>
+                
+                <p class="relative cursor-pointer" onclick="toggleLink('githubLink')">
+                    <i class="ri-github-fill"></i>
+                    <span id="githubLink" class="absolute left-0 mt-2 hidden text-blue-500 bg-white p-2 rounded shadow group-hover:block">
+                        <a href="https://github.com/aniketjdv" target="_blank">https://github.com/aniketjdv</a>
+                    </span>
+                </p>
+                
+                <p class="relative cursor-pointer" onclick="toggleLink('linkedinLink')">
+                    <i class="ri-linkedin-box-fill"></i>
+                    <span id="linkedinLink" class="absolute left-0 mt-2 hidden text-blue-500 bg-white p-2 rounded shadow group-hover:block">
+                        <a href="https://in.linkedin.com/" target="_blank">https://in.linkedin.com/</a>
+                    </span>
+                </p>
             </div>
+            
+            {% comment %} experient end {% endcomment %}
+
+
+
+
         </section>
     </main>
 
@@ -105,19 +135,50 @@
         <p>&copy; 2024 Your Name. All rights reserved.</p>
     </footer>
 
+   
+  
+    <script>
+        function toggleEmail() {
+            const emailSpan = document.getElementById('emailDisplay');
+            emailSpan.classList.toggle('hidden'); // Toggle visibility on click
+        }
+    
+        // Optional: Close the email display if clicked outside
+        document.addEventListener('click', function(event) {
+            const emailSpan = document.getElementById('emailDisplay');
+            const target = event.target.closest('.relative');
+            if (!target) {
+                emailSpan.classList.add('hidden'); // Hide if clicking outside
+            }
+        });
+
+        function toggleLink(linkId) {
+            const linkSpan = document.getElementById(linkId);
+            linkSpan.classList.toggle('hidden'); // Toggle visibility on click
+        }
+    
+        // Optional: Close the link display if clicked outside
+        document.addEventListener('click', function(event) {
+            const githubSpan = document.getElementById('githubLink');
+            const linkedinSpan = document.getElementById('linkedinLink');
+            const target = event.target.closest('.relative');
+            if (!target) {
+                githubSpan.classList.add('hidden'); // Hide if clicking outside
+                linkedinSpan.classList.add('hidden'); // Hide if clicking outside
+            }
+        });
+    </script>
+    
     <style>
-        .hover\:group:hover .group-hover\:block {
-            display: block;
+        .hidden {
+            display: none;
+        }
+
+        .group:hover #githubLink,
+        .group:hover #linkedinLink {
+            display: inline; /* Show on hover */
         }
     </style>
-    <script>
-        function showEmail() {
-            const emailElement = document.getElementById('email');
-            emailElement.classList.toggle('email-container'); // Toggle class for visibility
-            emailElement.classList.toggle('block'); // Show when toggled
-        }
-    </script>
-
 
 </body>
 </html>
